@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"><!--xmlns:th="http://www.w3.org/1000/xhtml"-->
+<head th:replace="common/adminheader :: common-header">
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body id="page-top">
+    <div th:replace="common/adminheader :: navbar" />
+
+    <div class="container">
+        <div class = "row" >
+            <div class="card col-xs-3 col-lg-3" style="border: solid; border-width: thin; border-radius:6px; ">
+                <div class="card-header" >
+                    <h4>User Data</h4>
+                </div>
+                <div class="card-body" >
+                    <ul>
+                        <!--<li><a th:href="@{/admin/adminUserData}">Modify User Data</a></li>-->
+                        <li><a th:href="@{/admin/adminUserBorowedBooks}">Borowed Items</a></li>
+                        <li><a th:href="@{/admin/adminUserReservedBooks}">Reserved Items</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card col-xs-3 col-lg-3" style="margin-left:3%; border: solid; border-width: thin; border-radius:6px; ">
+                <div class="card-header" >
+                    <h4>Author</h4>
+                </div>
+                <div class="card-body" >
+                    <ul>
+                        <li><a th:href="@{/admin/authors}">Authors List</a></li>
+                        <li><a th:href="@{/admin/newAuthor}">New Author</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card col-xs-3 col-lg-3" style="margin-left:3%; border: solid; border-width: thin; border-radius:6px; ">
+                <div class="card-header" >
+                    <h4>Category</h4>
+                </div>
+                <div class="card-body" >
+                    <ul>
+                        <li><a th:href="@{/admin/categories}">All Categories</a></li>
+                        <li><a th:href="@{/admin/category/newCategory}">New Category</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> <!-- /row -->
+
+        <div class = "row" style = "margin-top: 5%">
+            <div class="card col-xs-3 col-lg-3" style="border: solid; border-width: thin; border-radius:6px; ">
+                <div class="card-header" >
+                    <h4>Publisher</h4>
+                </div>
+                <div class="card-body" >
+                    <!--<div style="text-align: center;"><h4 class="card-title" >Publisher</h4></div>
+                    <hr style="margin-top:-5px;  border-width: 1px;">-->
+                    <ul>
+                        <li><a th:href="@{/admin/publishers}">All Publishers</a></li>
+                        <li><a th:href="@{/admin/newPublisher}">New Publisher</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card col-xs-3 col-lg-3" style="margin-left:3%; border: solid; border-width: thin; border-radius:6px; ">
+                <div class="card-header" >
+                    <h4>Books</h4>
+                </div>
+                <div class="card-body" >
+                    <ul>
+
+                        <li><a th:href="@{/admin/newBook}">New Book</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div> <!-- /row -->
+    </div>
+
+
+
+
+</body>
+</html>

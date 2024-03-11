@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/adminHeader :: common-header">
+
+</head>
+
+<body>
+<div th:replace="common/adminHeader :: navbar"/>
+
+<div class="container">
+    <div class="row" ><!--style="margin-bottom: 60px;"-->
+        <form class="form-inline col-sm-4" th:action="@{'/admin/adminUserReservedBooks'}">
+            <div class="form-group mb-4">
+                <label class="col-sm-4 col-form-label mx-auto">Username:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="username" minlength="2" maxlength="90" autofocus="autofocus" required />
+                </div>
+            </div>
+            <input type="submit" value="Select"/>
+        </form>
+    </div>
+
+    <div style="margin-top: -40px; " > <!--  -->
+        <form th:object="${user}" th:if="${usernametrue}" >
+            <div style="margin-top: 65px;  " >
+                <div class="col-xs-9" > <!-- AICI!!!!!!!!!!!!!-->
+                    <table class="table col-xs-9 table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-6">
+                                    <div class="row">
+                                        <!--<label class="col-sm-8 col-form-label mx-auto">Name:</label>-->
+                                        <label class="col-sm-8 col-form-label mx-auto">Name:</label>
+                                    </div>
+                                    <div class="row">
+                                       <!-- <div class="col-md-3" style="margin-bottom: 40px;">-->
+                                        <div class="col-sm-8" style="margin-bottom: 40px;">
+                                            <input type="text" readonly class="form-control"
+                                                   th:value="${user.firstName} + ' ' + ${user.lastName}"/>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label mx-auto">Phone:</label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="margin-bottom: 40px;">
+                                            <input type="text" readonly class="form-control"
+                                                   th:value="${user.phone}"/>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="col-xs-9">
+        <div th:if="${emptyList}" >
+            <h5 style="font-style: italic;">Oops, no result is found. Try
+                something else or try again later.</h5>
+        </div>
+        <div th:if="${message != null}" class="alert alert-danger  text-center" role="alert">
+            [[${message}]]
+        </div>
+    </div>
+
+    <p   name="username" th:text="${username}">></p>
+
+    <form th:action="@{/admin/collectReservedBooks}" th:object="${reservedItemsList}"  th:if="${emptyList == null && usernametrue == true }" >
+        <div style="margin-top: 65px;">
+            <div class="col-xs-9">
+                <table id="bookList" class="table col-xs-9 borderless" >
+                    <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Book Author</th>
+                        <th>Reserved Date</th>
+                        <th>Collect</th>
+                        <th>User</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr data-th-each="reservedItem : ${reservedItemsList}"> <!--class="book-item"  -->
+                        <td style="overflow: hidden; word-wrap: break-word; margin-left:700px">
+
+                            <div th:if="${reservedItem.book != null}">
+                                <div>
+                                    <h5 th:text="${reservedItem.book.title}"></h5>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div th:each="author : ${reservedItem.book.authors}">
+                                <p th:text="${author.name}"></p>
+                            </div>
+                        </td> <!-- Authors-->
+                        <td th:text="${reservedItem.reservedDate}"></td>
+                        <!--<td th:text="${reservedItem.collected}"></td>-->
+                        <td>
+                            <input type="checkbox" name="cid" th:value="${reservedItem.id}"/>
+                        </td>
+                        <td th:text="${reservedItem.user.firstName + ' ' + reservedItem.user.lastName}">
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <input hidden="true" name="username" th:value="${username}"/>
+                <input type="submit" value="Collect"/>
+
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

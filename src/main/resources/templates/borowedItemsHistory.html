@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" >
+
+</head>
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+		<div class="row" style="margin-bottom: -100px;">
+			<div class="col-xs-8">
+				<h2 class="section-headline">
+					<!--<h2 class="section-headline">
+						<span
+							th:text="${user}? ${#strings.toUpperCase(user.username)} : 'All Books'"></span>
+					</h2>-->
+				</h2>
+			</div>
+		</div>
+
+		<div class="row">
+			<div  class="home-headline"> <!---->
+				<span th:text="${user}? ${#strings.toUpperCase(user.username)}" style="margin-left:-1000px;" ></span>
+			</div>
+			<hr style="margin-top: -15px; " />
+		</div>
+
+		<div class="row" style="margin-top: 60px;">
+			<div class="col-xs-9">
+				<div th:if="${emptyList}">
+					<h5 style="font-style: italic;">No result is found. </h5>
+				</div>
+				<div>
+					<form th:action="@{/borowedItemHistory/page/1}" class="form-inline m-3">
+						Filter:&nbsp
+						<input type="search" name="keyword" class="form-control" required />
+						&nbsp &nbsp
+						<input type="submit" value="Search" class="btn btn-primary" />
+						&nbsp &nbsp
+						<input type="button" value="Clear" class="btn btn-secondary" />
+					</form>
+				</div>
+
+				<!--<table border="0" id="bookList" class="table table-sm table-inverse">-->
+				<table id="bookList" class="table table-striped table-hover table-responsive-xl">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Users Id</th>
+							<th>Book Id</th>
+							<th >
+								<a th:if="${sortField != 'book_title'}"
+								th:href="@{'/borowedItemHistory/page/' + ${currentPage} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword: '' }}">
+									Book Title
+								</a>
+								<a th:if="${sortField == 'book_title'}"
+								   th:href="@{'/borowedItemHistory/page/' + ${currentPage} + '?sortField=' + ${sortField} + '&sortDir=' + ${reverseSortDir}
+								   				 + ${keyword != null ? '&keyword=' + keyword: '' }}">
+									Book Title
+								</a>
+								<span
+									  th:class="${sortDir == 'asc' ? 'fa fa-sort-up' : 'fa fa-sort-down'}">
+								</span>
+							</th>
+							<th>Book Author</th>
+							<th>Borowed Date</th>
+							<th>Due Date</th>
+							<th>Returned Date</th>
+							<th>Returned</th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+						<tr class="book-item" data-th-each="borowedItem : ${borowedItemList}" >
+							<td th:text="${borowedItem.id}"></td>
+							<td th:text="${borowedItem.user.id}"></td>
+							<td th:text="${borowedItem.book.id}"></td>
+							<td>
+								<div th:if="${borowedItem.book != null}">
+									<div class="row" style="margin-bottom: 50px;">
+
+										<div>
+											<a th:href="@{/bookDetail?id=}+${borowedItem.book.id}">
+												<h5 th:text="${borowedItem.book.title}"></h5>
+											</a>
+
+
+										</div>
+									</div>
+								</div>
+							</td>
+
+							<td ><!-- Authors-->
+								<div  th:each="author : ${borowedItem.book.authors}">
+									<p  th:text="${author.name}"></p>
+								</div>
+							</td>
+							<td th:text="${#temporals.format(borowedItem.borowedDate, 'dd-MM-yyyy')}"></td>
+							<td th:text= "${#temporals.format(borowedItem.dueDate, 'dd-MM-yyyy')}"></td>
+							<td th:text="${#temporals.format(borowedItem.returnDate, 'dd-MM-yyyy')}"></td>
+							<!--<td th:text="${ - }"-->
+							<td th:text="${borowedItem.returned}"></td>
+
+						</tr>
+					</tbody>
+				</table>
+
+				<div th:if="${totalPages > 0}">
+					<ul class="pagination justify-content-center">
+						<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+							<a class="page-link" th:href="@{'/borowedItemHistory/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword: '' } }">First</a>
+						</li>
+						<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+							<!--<a class="page-link" th:href="@{'/searchBook/page/' + ${currentPage - 1 > 0? currentPage - 1: 1}}">Previous</a>-->
+							<a class="page-link" th:href="@{'/borowedItemHistory/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword: '' } }">Previous</a>
+						</li>
+
+						<li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" th:each="i: ${#numbers.sequence(1, totalPages)}" >
+							<a class="page-link"  th:href="@{'/borowedItemHistory/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword: '' } }" >[[${i}]]</a> <!-- + ${keyword != null ? '&keyword=' : ''} + ${keyword != null ? ${keyword}}: '' -->
+						</li>
+
+						<li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+							<a class="page-link" th:href="@{'/borowedItemHistory/page/' + ${currentPage + 1 } + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword: '' }  }">Next</a>
+						</li>
+						<li  th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+							<a class="page-link" th:href="@{'/borowedItemHistory/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword: '' }  }">Last</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end of container -->
+
+</body>
+</html>

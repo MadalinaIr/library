@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header"/>
+
+<body>
+<div th:replace="common/header :: navbar"/>
+
+<div class="container">
+
+    <div class="row" style="margin-top: 60px;">
+        <div class="col-xs-9">
+            <div th:if="${emptyList}">
+                <h5 style="font-style: italic;">No result is found.</h5>
+            </div>
+            <div th:if="${message != null}" class="alert alert-success text-center">
+                [[${message}]]
+            </div>
+            <!--<table border="0" id="bookList" > -->
+            <table border="0" id="bookList" class="table table-sm table-inverse" th:if="${emptyList == null}">
+                <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Book Author</th>
+                    <th>Reserved Date</th>
+                    <th>Collected</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="book-item" data-th-each="reservedItem : ${reservedItemList}">
+                    <td>
+                        <div th:if="${reservedItem.book != null}">
+                            <div class="row" style="margin-bottom: 50px;">
+                                <div class="col-xs-3">
+                                    <a th:href="@{/bookDetail?id=}+${reservedItem.book.id}">
+                                        <!--<img class="img-responsive shelf-book"
+                                        th:src="#{adminPath}+@{/image/book/}+${borowedItem.book.id}+'.png'" />-->
+                                    </a>
+                                </div>
+                                <!--<div class="col-xs-9" >-->
+                                <div>
+                                    <a th:href="@{/bookDetail?id=}+${reservedItem.book.id}"
+                                       th:text="${reservedItem.book.title}"></a>
+                                    <!--<span th:text="${borowedItem.book.publicationDate}"></span>-->
+
+                                    <!--
+                                    <a th:href="@{/bookDetail?id=}+${borowedItem.book.id}">
+                                    <span th:text="${#strings.capitalize(book.format)}"></span></a> <span
+                                        th:text="${borowedItem.book.numberOfPages}"><span> pages</span></span><br />
+                                    -->
+
+                                    <!--
+                                    <a th:href="@{/bookDetail?id=}+${book.id}"><span
+                                        style="font-size: x-large; color: #db3208;">$<span
+                                            th:text="${#numbers.formatDecimal(book.ourPrice, 0 , 'COMMA', 2, 'POINT')}"></span></span></a>
+
+                                    <span style="text-decoration: line-through;">$<span
+                                        th:text="${#numbers.formatDecimal(book.listPrice, 0 , 'COMMA', 2, 'POINT')}"></span></span>
+                                    -->
+
+                                    <!--<p th:utext="${#strings.abbreviate(borowedItem.book.description, 1000)}"></p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div th:each="author : ${reservedItem.book.authors}">
+                            <!--<p  th:text="${author.firstName}+ ' ' + ${author.lastName}"></p>-->
+                            <p th:text="${author.name}"></p>
+                        </div>
+                    </td> <!-- Authors-->
+                    <td th:text="${reservedItem.reservedDate}"></td>
+                    <td th:text="${reservedItem.collected}"></td>
+                    <td>
+                        <a th:href="@{'/reservedItem/delete/' + ${reservedItem.id}}"
+                           title="Remove this book">Remove</a>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- end of container -->
+<!--
+
+
+-->
+
+</body>
+</html>

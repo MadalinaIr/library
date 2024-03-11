@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">
+<head th:replace="common/header :: common-header" />
+
+<body>
+	<div th:replace="common/header :: navbar" />
+
+	<div class="container">
+
+		<div class="row" style="margin-top: 50px;">
+			<!-- Category
+			<div class="col-xs-3">-->
+			<div class="col-xs-3">
+
+				<table class="list-group"  id = "categorytab" th:if="${categoryList != null}">
+					<thead>
+					<tr>
+						<th><h3><label for="categorytab">Category</label></h3></th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr data-th-each="categ : ${categoryList}">
+							<td>
+								<div th:if="${categ != null}">
+									<a th:href="@{/searchByCategory(category = ${categ.name})}" th:classappend="${#strings.equals( categ.name, clsActiveCategory ) }? 'active'" class="list-group-item"
+											th:text="${categ.name}"></a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col-xs-9">
+				<div th:if="${emptyList}">
+					<h5 style="font-style: italic;">No result is found.</h5>
+				</div>
+
+				<table border="0" id="bookList">
+					<thead>
+						<tr >
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr class="book-item" data-th-each="book : ${bookList}" >
+							<td>
+								<div th:if="${book != null}">
+									<div class="row" style="margin-bottom: 50px;">
+										<div class="col-xs-3">
+											<a th:href="@{/bookDetail?id=}+${book.id}">
+												<!--<img class="img-responsive shelf-book"
+												th:src="#{adminPath}+@{/image/book/}+${book.id}+'.png'" /> -->
+											</a>
+										</div>
+										<div class="col-xs-9" >
+											<a th:href="@{/bookDetail?id=}+${book.id}"><h4
+													th:text="${book.title}"></h4></a>
+											<!--<span th:text="${book.publicationDate}"></span>-->
+											<div th:each="author : ${book.authors}" >
+												<p th:text="${author.name}"></p>
+											</div>
+											<a th:href="@{/bookDetail?id=}+${book.id}"><!--<span
+												th:text="${#strings.capitalize(book.format)}"></span>--></a> <span
+												th:text="${book.numberOfPages}"><span> pages</span></span><br />
+
+											<p th:utext="${#strings.abbreviate(book.description, 1000)}"></p>
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="text-center-m-1" th:if="${totalItems > 0}">
+					<span>Showing pages #[[${startCount}]] to [[${endCount}]] of [[${totalItems}]] </span>
+				</div>
+				<div class="text-center-m-1" th:unless="${totalItems <= 0}">
+					<span></span>
+				</div>
+
+				<div>
+					<ul class="pagination justify-content-center">
+						<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+							<a class="page-link" th:href="@{/searchBook/page/1}">First</a>
+						</li>
+						<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+							<!--<a class="page-link" th:href="@{'/searchBook/page/' + ${currentPage - 1 > 0? currentPage - 1: 1}}">Previous</a>-->
+							<a class="page-link" th:href="@{'/searchBook/page/' + ${currentPage - 1}}">Previous</a>
+						</li>
+
+						<li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" th:each="i: ${#numbers.sequence(1, totalPages)}" >
+							<a class="page-link"  th:href="@{'/searchBook/page/' + ${i}}" >[[${i}]]</a>
+						</li>
+
+						<li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+							<a class="page-link" th:href="@{'/searchBook/page/' + ${currentPage + 1 }}">Next</a>
+						</li>
+						<li  th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+							<a class="page-link" th:href="@{'/searchBook/page/' + ${totalPages}}">Last</a>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end of container -->
+	<!--
+
+
+	-->
+
+</body>
+</html>

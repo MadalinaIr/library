@@ -34,7 +34,7 @@ public class PublisherServiceImpl implements PublisherService{
     @Override
     public boolean isPublisherUnique(Long id, String name) {
         Publisher publisher = publisherRepository.findByName(name);
-        if (publisher != null)
+        if (publisher == null)
             return true;
         return false;
     }

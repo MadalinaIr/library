@@ -55,19 +55,21 @@
             categoryId = $("#id").val();
             csrfValue = $("input[name='_csrf']").val();
 
-            params = {id: categoryId, name: authorName, _csrf: csrfValue};
+            params = {id: categoryId, author: authorName, _csrf: csrfValue};
 
             $.post(url, params, function(response){
                 if (response == "Unique"){
                     form.submit();
                 }else if (response == "Duplicated"){
-                    showModalDialog("Warning", "There is another author having the same name" + authorName);
-                //    alert("There is another author having the same name: " + authorName);
+                    //showModalDialog("Warning", "There is another author having the same name" + authorName);
+                    alert("There is another author having the same name: " + authorName);
                 }else {
-                    showModalDialog("Error", "Unknown response from server");
+                    //showModalDialog("Error", "Unknown response from server");
+                     alert("Error", "Unknown response from server");
                 }
             }).fail(function() {
-                showModalDialog("Error", "Could not connect to the server");
+                //showModalDialog("Error", "Could not connect to the server");
+                 alert("Error", "Could not connect to the server");
             });
             return false;
         }

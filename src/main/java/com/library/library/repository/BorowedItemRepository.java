@@ -13,14 +13,8 @@ import com.library.library.model.security.User;
 //@Transactional
 //public interface BorowedItemRepository extends CrudRepository<BorowedItem, Long>, PagingAndSortingRepository<BorowedItem, Long>, JpaSpecificationExecutor {
 public interface BorowedItemRepository extends CrudRepository<BorowedItem, Long>, PagingAndSortingRepository<BorowedItem, Long> {
-    /*
-    @Query(value = " select b1.id, b1.book_id, b1.borowed_date, b1.due_date, b1.return_date, b1.returned, b1.user_personal_data_id\n" +
-                   " from borowed_item b1 left join book\n" +
-                  "            on b1.book_id=book.id where book.title like %?1% ",
-    public Page<BorowedItem> findAll(String keyword, Pageable pageable);
-     */
+
     //public Page<BorowedItem> findDistinctByBookTitleLikeOrBookAuthorsFirstNameLikeOrBookAuthorsLastNameLike(String title, String firstName, String lastName, Pageable pageable);
-    //List<BorowedItem> findByUserPersonalData(UserPersonalData userPersonalData);
     List<BorowedItem> findByUserAndReturnedEquals(User user, Boolean returned);
     public Page<BorowedItem> findDistinctByBookTitleLikeOrBookAuthorsNameLike(String title, String name, Pageable pageable);
     public Page<BorowedItem> findAllByUserIdAndBookTitleLikeOrBookAuthorsNameLike(Long userId, String title, String name, Pageable pageable);

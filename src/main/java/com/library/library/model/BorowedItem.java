@@ -10,7 +10,7 @@ import com.library.library.model.security.User;
 @Entity
 public class BorowedItem implements Persistable<Long> {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
     @OneToOne

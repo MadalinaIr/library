@@ -25,8 +25,6 @@ public class SecurityConfig {
             "/login",
             "/bookshelf",
             "/bookDetail/**",
-            "/hours",
-            "/faq",
             "/searchByCategory",
             "/searchBook/**",
             "/sorting/**"
@@ -58,8 +56,7 @@ public class SecurityConfig {
 
                 .formLogin(form ->
                         form
-                                .loginPage("/")//.loginPage("/showMyLoginPage")
-                               // .loginPage("/showMyLoginPage")
+                                .loginPage("/")
                                 .successHandler(successHandler)
                                 .loginProcessingUrl("/login")//.loginProcessingUrl("/authenticateTheUser")
                                 .failureHandler(new SimpleUrlAuthenticationFailureHandler("/login?error"))

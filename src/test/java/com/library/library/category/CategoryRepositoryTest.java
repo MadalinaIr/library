@@ -21,9 +21,16 @@ public class CategoryRepositoryTest {
     @Test
     public  void testCreateCategory(){
         Category category = new Category();
-        category.setName("a-z");
+        category.setName("category a-z");
         Category savedCategory = categoryRepository.save(category);
 
         assertThat(savedCategory.getId()).isGreaterThan(0);
     }
+
+    @Test
+    public void testGetCategory(){
+        Category category = categoryRepository.findByName("category a-z");
+        assertThat(category).isNotNull();
+    }
+
 }

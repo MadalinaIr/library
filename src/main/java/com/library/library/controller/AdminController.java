@@ -116,8 +116,6 @@ public class AdminController {
 
     @PostMapping("/admin/category/save")
     public String saveCategory(Category category, RedirectAttributes redirectAttributes, Model model) {
-        // To display the success message that the user has been store to the database we use redirect
-        // The message will show above users table
         try {
             categoryService.save(category);
         }
@@ -148,8 +146,6 @@ public class AdminController {
 
     @PostMapping("/admin/author/save")
     public String saveAuthor(Author author, RedirectAttributes redirectAttributes) {
-        // To display the success message that the user has been store to the database we use redirect
-        // The message will show above users table
         redirectAttributes.addFlashAttribute("message", "The new author has been saved successfully.");
         authorService.save(author);
         return "redirect:/admin/authors";
@@ -174,10 +170,8 @@ public class AdminController {
 
     @PostMapping("/admin/publisher/save")
     public String savePublisher(Publisher publisher, RedirectAttributes redirectAttributes) {
-        // To display the success message that the user has been store to the database we use redirect
-        // The message will show above users table
         redirectAttributes.addFlashAttribute("message", "The new publisher has been saved successfully.");
-        //publisherService.save(publisher);
+        publisherService.save(publisher);
         return "redirect:/admin/publishers";
     }
 
@@ -206,9 +200,6 @@ public class AdminController {
 
     @PostMapping("/admin/book/save")
     public String saveBook(Book book, RedirectAttributes redirectAttributes) {
-        // To display the success message that the user has been store to the database we use redirect
-        // The message will show above users table
-
         try {
             //book.getAuthors().forEach(author-> System.out.println(author.getBooks().toString()));
             bookService.updateBook(book);

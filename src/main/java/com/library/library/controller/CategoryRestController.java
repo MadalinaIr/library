@@ -17,8 +17,7 @@ public class CategoryRestController {
     }
 
     @PostMapping("/admin/check_category")
-    public String checkDuplicateCategory(@Param("id") Long id, @Param("category") String category, Model model){
-
+    public String checkDuplicateCategory(@Param("id") Long id, @Param("category") String category){
         return categoryService.isCategoryUnique(id, category)? "Unique" : "Duplicated";
     }
 

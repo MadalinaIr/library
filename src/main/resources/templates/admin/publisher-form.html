@@ -50,8 +50,8 @@
             publisherName = $("#name").val();
             publisherId = $("#id").val();
             csrfValue = $("input[name='_csrf']").val();
-
-            params = {id: publisherId, name: publisherName, _csrf: csrfValue};
+            //alert("csrfValue " + csrfValue);
+            params = {id: publisherId, publisher: publisherName, _csrf: csrfValue};
 
             $.post(url, params, function(response){
                 if (response == "Unique"){

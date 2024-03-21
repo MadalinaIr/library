@@ -1,6 +1,5 @@
 package com.library.library.publisher;
 
-import com.library.library.model.Category;
 import com.library.library.model.Publisher;
 import com.library.library.repository.PublisherRepository;
 import org.junit.jupiter.api.Test;
